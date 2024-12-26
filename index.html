@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Routine</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        /* Add your styles here */
+        #capture-btn {
+            margin-top: 40px;
+            background-color: #f39200;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 50px;
+            background-color: #0b141d;
+            color: #ffffff;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #6a9bd8;
+        }
+        h1 {
+            margin-bottom: 5px;
+        }
+        .date-time {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #9cb3c9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #16222f;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #1d2a38;
+            color: #e2e8f0;
+        }
+        th {
+            background-color: #1b2736;
+            color: #a1d0ff;
+            text-transform: uppercase;
+        }
+        tr:nth-child(even) {
+            background-color: #11202e;
+        }
+        tr:nth-child(odd) {
+            background-color: #16222f;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #1b2736;
+            color: #ffffff;
+            transition: background-color 0.3s;
+        }
+        button:disabled {
+            cursor: not-allowed;
+        }
+        .success {
+            background-color: #28a745 !important;
+            color: #ffffff !important;
+        }
+        @media (min-width: 300px) and (max-width: 500px) {
+                body{
+                    padding: 0px;
+                }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Daily Routine</h1>
+    <div class="date-time" id="date-time"></div>
+    <table id="task-list">
+        <thead>
+            <tr>
+                <th>কাজ</th>
+                <th>শুরু সময়</th>
+                <th>শেষ সময়</th>
+                <th>স্ট্যাটাস</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- সকাল -->
+            <tr>
+                <td>Python অনুশীলন (ক্লাসের বাইরে)</td>
+                <td>৯:০০ AM</td>
+                <td>১০:০০ AM</td>
+                <td><button id="task2" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <tr>
+                <td>Laravel প্রজেক্ট কাজ (একদিন পোর্টফোলিও, একদিন Laravel)</td>
+                <td>১০:০০ AM</td>
+                <td>১১:০০ AM</td>
+                <td><button id="task3" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <tr>
+                <td>পোর্টফোলিও প্রজেক্ট কাজ</td>
+                <td>১১:০০ AM</td>
+                <td>১:০০ PM</td>
+                <td><button id="task4" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <!-- বেলা -->
+            <tr>
+                <td>বিরতি ও দুপুরের খাবার</td>
+                <td>১:০০ PM</td>
+                <td>২:০০ PM</td>
+                <td><button id="task5" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <!-- দুপুর -->
+            <tr>
+                <td>Python অনুশীলন (ক্লাসের বাইরে)</td>
+                <td>৪:০০ PM</td>
+                <td>৫:০০ PM</td>
+                <td><button id="task6" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <tr>
+                <td>Enexly নিয়ে নতুন আইডিয়া ভাবা</td>
+                <td>৫:০০ PM</td>
+                <td>৬:০০ PM</td>
+                <td><button id="task7" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <tr>
+                <td>LinkedIn পোস্ট তৈরি/শেয়ার</td>
+                <td>৬:০০ PM</td>
+                <td>৭:০০ PM</td>
+                <td><button id="task8" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <!-- সন্ধ্যা -->
+            <tr>
+                <td>ভিডিও চিত্রগ্রহণ বা এডিটিং</td>
+                <td>৭:০০ PM</td>
+                <td>৮:০০ PM</td>
+                <td><button id="task9" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <tr>
+                <td>Python অনুশীলন (ক্লাসের বাইরে)</td>
+                <td>৮:০০ PM</td>
+                <td>৯:০০ PM</td>
+                <td><button id="task10" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <!-- রাত -->
+            <tr>
+                <td>Python ক্লাস (সপ্তাহে ৩ দিন)</td>
+                <td>৯:০০ PM</td>
+                <td>১০:৩০ PM</td>
+                <td><button id="task11" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <tr>
+                <td>Laravel প্রজেক্ট বা ভিডিও সম্পন্ন করা</td>
+                <td>১২:০০ AM</td>
+                <td>২:০০ AM</td>
+                <td><button id="task12" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+            <!-- সবার শেষে Enexcode সাইট আপডেট -->
+            <tr>
+                <td>Enexcode সাইট আপডেট</td>
+                <td>২:০০ AM</td>
+                <td>৩:০০ AM</td>
+                <td><button id="task13" onclick="markComplete(this)">Pending</button></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Weekly Tasks List -->
+    <h3>সম্পূর্ণ সপ্তাহের কাজের লিস্ট</h3>
+    <ul>
+        <li>Python অনুশীলন (ক্লাসের বাইরে)</li>
+        <li>Laravel প্রজেক্ট কাজ (একদিন পোর্টফোলিও, একদিন Laravel)</li>
+        <li>পোর্টফোলিও প্রজেক্ট কাজ</li>
+        <li>বিরতি ও দুপুরের খাবার</li>
+        <li>Enexly নিয়ে নতুন আইডিয়া ভাবা</li>
+        <li>LinkedIn পোস্ট তৈরি/শেয়ার</li>
+        <li>ভিডিও চিত্রগ্রহণ বা এডিটিং</li>
+        <li>Python ক্লাস (সপ্তাহে ৩ দিন)</li>
+        <li>Laravel প্রজেক্ট বা ভিডিও সম্পন্ন করা</li>
+        <li>Enexcode সাইট আপডেট</li>
+    </ul>
+    
+    <button id="capture-btn" onclick="capturePage()">Capture Screenshot</button>
+    <script>
+function capturePage() {
+            html2canvas(document.body).then(function(canvas) {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = new Date().toISOString().replace(/:/g, '-') + '.png';
+                link.click();
+            });
+        }
+
+        // Your existing task handling functions go here, such as markComplete
+        function markComplete(button) {
+            button.textContent = "Completed";
+            button.classList.add("success");
+            button.disabled = true;
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            document.getElementById('date-time').textContent = now.toLocaleDateString('en-US', options);
+        }
+    
+        function markComplete(button) {
+            const taskId = button.id;
+            button.textContent = "Completed";
+            button.classList.add("success");
+            button.disabled = true;
+    
+            // Store the task status in localStorage
+            localStorage.setItem(taskId, 'completed');
+        }
+    
+        function resetTasks() {
+            const buttons = document.querySelectorAll("#task-list button");
+            buttons.forEach(button => {
+                button.textContent = "Pending";
+                button.classList.remove("success");
+                button.disabled = false;
+                localStorage.removeItem(button.id);
+            });
+        }
+    
+        // Listen for the Ctrl+Shift+J key combination
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key === 'J') {
+                event.preventDefault(); // Prevent default browser action
+                resetTasks(); // Reset all tasks to "Pending"
+            }
+        });
+    
+        // Load task status from localStorage on page load
+        function loadTaskStatus() {
+            const buttons = document.querySelectorAll("#task-list button");
+            buttons.forEach(button => {
+                const taskId = button.id;
+                if (localStorage.getItem(taskId) === 'completed') {
+                    button.textContent = "Completed";
+                    button.classList.add("success");
+                    button.disabled = true;
+                }
+            });
+        }
+    
+
+    
+        updateDateTime();
+        setInterval(updateDateTime, 1000); // Update date and time every second
+        window.onload = loadTaskStatus; // Load task status when the page loads
+
+
+        
+    </script>
+    
+
+    </body>
+    </html>
+    
